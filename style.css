@@ -1,0 +1,65 @@
+#title {
+    margin: 100px auto 0;
+    min-height: 1px;
+    max-width: 800px;
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    padding: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+
+#text {
+    margin: 0 auto;
+    padding: 10px;
+    max-width: 800px;
+    line-height: 30px;
+}
+
+/* h1 {
+    font-family: TradeGothicBold, serif;
+    font-size: 42px;
+    font-weight: bold;
+} */
+
+/* h2 {
+    font-size: 42px;
+    font-weight: bold;
+} */
+
+h3 {
+    font-family: TradeGothicBold, serif;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 28px;
+}
+
+p, ul, li {
+    font-family: "Source Serif Pro", serif;
+    font-size: 19px;
+}
+
+img {
+    display: block; /* Make sure the image is treated as a block-level element */
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+
+.caption {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.note {
+    font-size: 14px;
+    text-align: center;
+}
+
+#conclusions {
+    border-top: solid 1px black;
+    margin: 0 auto;
+    padding: 10px;
+    max-width: 800px;
+    line-height: 30px;
+}

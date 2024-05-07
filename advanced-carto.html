@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UDSC Bootcamp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="title">
+            <h1>Advanced Cartography</h1>
+            <p>Exploring thematic map types and data classification</p>
+            <p>Lindsey Smith</p>
+            <p>May, 2024</p>
+        </div>
+
+        <div id="text">
+            <p>
+                <b>Thematic maps</b> focus on a particular topic, or “theme”, allowing us to present data values for one
+                or more variables across a geographic area. Unlike reference maps, which tell us where things are,
+                thematic maps tell us about spatial patterns within our data. For example, in an urban setting, we may
+                be interested in mapping factors that contribute to food insecurity. Here, we could overlay data layers
+                that quantify household income, grocery stores, food support schemes, and public transport access.
+            </p>
+
+            <p>
+                There are a range of thematic map types and ways to divide up and visualise our data. Though map design
+                is somewhat subjective and there’s often no “right” way to present our data, ultimately, we want to make
+                <b>informed decisions about the map type we use, colour schemes, and the way we classify our data</b>.
+                For example, if we are mapping data for a single quantitative variable (e.g., % population graduating
+                from high school) we will likely work with a single colour that sequentially increases in darkness so
+                that low data values are represented by light colours. Conversely, if we were mapping data for a
+                qualitative variable, such as land use type, colours must be distinct as we do not want to imply any
+                order across our values.
+            </p>
+
+            <p><img src="img/to-popn-maptypes.png" alt="Grid of three maps displaying population in Toronto, 2021"
+                    width="800px"></p>
+
+
+
+            <p class="caption">
+                <i>Example of dot, choropleth, and proportional symbols maps representing population in Toronto</i>
+            </p>
+
+            <p>
+                Below, you will learn about three common thematic mapping techniques, and give consideration to when and
+                how best to use them.
+            <ul>
+                <li>Choropleth maps</li>
+                <li>Proportional symbols maps</li>
+                <li>Dot maps</li>
+            </ul>
+
+            </p>
+
+        </div>
+
+        <div id="text">
+            <h2>Choropleth maps</h2>
+
+            <p>
+                Choropleth maps are typically used to portray data collected for spatial enumeration units, such as
+                census tracts or dissemination areas. Shading and colour are relied on to represent values relative to
+                each unit/area.
+            </p>
+
+            <p>
+                <img src="img/sample-choro.png" alt="Sample choropleth map">
+            </p>
+
+            <p class="caption">
+                <i>Sample choropleth map (Pithwa, 2020)</i>
+            </p>
+
+            <p>
+                Choropleth maps are perhaps the most common map type you will have come across and are popular for
+                presenting population density, demographic indicators, and weather and climate data. While these data
+                are all ordered, a choropleth may also be appropriate for qualitative (also called nominal) data such as
+                land use or most commonly spoken language. Though they are relatively easy to interpret, there are a
+                couple of things to consider when reading or constructing choropleth maps:
+            </p>
+
+            <h3>1. Data standardisation</h3>
+            <p>
+                Raw totals or counts <b>must be adjusted to account for the size of the enumeration unit</b>. For
+                example, it would be appropriate to calculate a <u>density measure</u> for population where the total
+                population count is divided by the total area of the spatial unit. As well as density measures,
+                <u>proportions</u> (e.g., % population with access to high-speed internet), <u>summary measures</u>
+                (e.g., median
+                household income) and <u>rates</u> (e.g., number of births per 1,000 people) are all appropriate forms
+                of data
+                standardisation that may be used within choropleth maps.
+            </p>
+
+            <p>
+                Although choropleth maps work best when our spatial units are similar in size and shape, we have little
+                control over this! Standardising our data therefore ensures values for each unit are presented on a
+                common scale and can be compared more meaningfully.
+            </p>
+
+            <p>
+                <i>As a side note, in instances where spatial enumeration units are less relevant and point data have
+                    been collected, you may want to look into creating a <a
+                        href="https://think.design/services/data-visualization-data-design/hexbin/#:~:text=1When%20you%20need%20to,represented%20equally%20dismissing%20the%20bias."
+                        target="_blank">hexbin</a> or grid map whereby counts are quantified within equal-sized units.
+                </i>
+            </p>
+
+            <h3>2. Projection</h3>
+            <p>An <a href="https://en.wikipedia.org/wiki/Equal-area_projection" target="_blank">equal area
+                    projection</a> is preferred for maps presenting standardised data. Equal area projections, such
+                as Canada Albers Equal Area Conic, prioritise the preservation of area. With the relative sizes of each
+                spatial unit maintained, it is therefore easier to assess proportional relationships between spatial
+                units without being confused by potential distortions.</p>
+
+            <p>
+                <i>
+                    There are plenty of <a
+                        href="https://docs.qgis.org/3.34/en/docs/gentle_gis_introduction/coordinate_reference_systems.html#"
+                        target="_blank">resources</a> to help you strengthen your understanding of coordinate references
+                    systems. In brief, a projection is used to translate a 3D ellipsoidal surface, typically
+                    representing the Earth’s surface, onto a 2D plane. The ellipsoidal surface, known as a datum, serves
+                    as a model for the Earth. A common datum is WGS84 which provides a generalized representation of the
+                    globe, but there are many others which are tailored to different regions of the Earth. A datum uses
+                    a geographic coordinate reference system to measure Latitude and Longitude, typically recorded in
+                    decimal degrees or degrees, minutes and seconds. If you have data in a geographic coordinate
+                    reference system but wish to convert it to use another datum, you will need to transform the
+                    coordinates using specific transformation parameters. Luckily, <a
+                        href="https://docs.qgis.org/3.34/en/docs/training_manual/vector_analysis/reproject_transform.html#"
+                        target="_blank">tools</a> within GIS software can help us with this process… though it’s
+                    important to ensure you are using the correct transformation depending on the geographic location of
+                    your data!
+                    <br>A projection therefore takes our Latitude and Longitude values relative to a datum, and converts
+                    them into a projected coordinate system so that they can be presented on a flat surface. Now our
+                    coordinates are measured in Eastings and Northings which are often presented in metres. There are
+                    many ways that this can be done, as shown in the image below, with each projection suited to
+                    different regions of the Earth.
+                </i>
+            </p>
+
+            <p>
+                <img src="img/crs.png" alt="Diagram of three globes and examples of projection methods that convert a 3D surface to a flat plane">
+            </p>
+
+            <p class="caption">
+                <i>Examples of projection methods that convert a 3D surface to a flat plane</i>
+            </p>
+
+            <p><i>Different projections, however, distort/preserve various aspects of the Earth, such as <u>shape, area,
+                    distance, or direction</u>. When choosing a projection, you are often trading-off one characteristic for
+                    another. For example, a common projection we see used is the <a href="https://en.wikipedia.org/wiki/Mercator_projection" target="_blank">Mercator</a>, but this was developed in
+                    16th century for navigation. It preserves shape and angles but distorts area, particularly near the
+                    Poles. It’s continued use reflects a colonial legacy as it exhibits Eurocentric bias and exaggerates
+                    the size of land masses further from the Equator.</i></p>
+
+            <h3>3. Colour scheme</h3>
+            <p>
+                When choosing a colour scheme for our maps, we are often drawn to colours we find visually appealing,
+                however, it’s important to make your selection with accessibility and ease of interpretation in mind.
+            </p>
+
+            <p>
+                <img src="img/colour-schemes.png" alt="Diagram of colour schemes used in maps, depsnding on the data">
+            </p>
+
+            <p class="caption">
+                <i>Sequential, diverging, and categorical colour schemes (<a href="https://blog.datawrapper.de/which-color-scale-to-use-in-data-vis/" target="_blank">Muth, 2021</a>)</i>
+            </p>
+
+            <p>
+                Sequential colour schemes are used for data that has a natural ordering, such as quantitative data that
+                range from low to high (e.g., density of fast food outlets). Here, a single colour that varies in
+                lightness is most commonly used. Diverging colour schemes are suitable when there is a natural break
+                point in the data. For example, a map of population change may use one colour for percentage increase
+                and another colour for percentage decrease, where no change is the natural break point. Lastly,
+                qualitative colour schemes are appropriate for non-ordered data (e.g., majority ethnic group per
+                geographic unit) and rely on distinct colours to differentiate between values without implying any
+                order.
+            </p>
+
+            <p>
+                Colour schemes should also be accessible to all users, including those with visual impairments or colour
+                vision deficiencies. As a general rule, it’s best to avoid colours with low contrast or that are
+                difficult to distinguish. Tools such as <a href="https://colorbrewer2.org/"
+                    target="_blank">ColorBrewer</a> and <a
+                    href="https://projects.susielu.com/viz-palette?colors=[%22#ffd700%22,%22#ffb14e%22,%22#fa8775%22,%22#ea5f94%22,%22#cd34b5%22,%22#9d02d7%22,%22#0000ff%22]&backgroundColor=%22white%22&fontColor=%22black%22&mode=%22deuteranopia%22"
+                    target="_blank">VizPalette</a> provide helpful suggestions for choosing appropriate colour schemes.
+            </p>
+
+            <h3>4. Boundaries</h3>
+            <p>It’s important to consider that the boundaries of the spatial units used to present our data values are
+                often arbitrary. Abrupt boundaries can imply discontinuities in a spatial phenomenon, making it
+                challenging for viewers to discern gradual changes in the data. Here, exploring the data further through
+                smaller geographic units can help viewers understand the impacts of potential boundary effects.</p>
+        </div>
+
+
+        <div id="text">
+            <h2>Proportional symbols maps</h2>
+
+            <p>
+                While choropleths are arguably the most popular map type, it’s important to consider the nature of the
+                data you’re working with and whether an alternative map type may more appropriate.
+            </p>
+
+            <p>
+                <a href="https://en.wikipedia.org/wiki/Proportional_symbol_map" target="_blank">Proportional symbol
+                    maps</a> are suitable for representing numerical or ordered data associated with point
+                locations. Point data may be associated with either true point locations (e.g., temperature recordings
+                at a weather station) or conceptual point locations (e.g., number of disease cases plotted at the
+                centroid of a census tract).
+            </p>
+
+
+            <p>
+                <img src="img/propn-symbols-map.png" alt="Proportional symbols map">
+            </p>
+
+            <p class="caption">
+                <i>Example proportional symbols map of GDP across Europe (<a
+                        href="https://commons.wikimedia.org/w/index.php?curid=96000655" target="_blank">Bplewe, CC BY-SA
+                        4.0</a>)</i>
+            </p>
+            <p>
+                Symbol sizes are scaled proportionally to the data values. For example, if city A has twice the
+                population of city B, the population symbol for city B will be half the size. Alternatively, you may
+                classify your data into groups (we’ll come on to this!). Symbols will then increase in size
+                incrementally for each group – we call this a <i>graduated symbols map</i>.
+            </p>
+
+            <p>
+                Proportional symbols maps offer flexibility in representing data. Unlike choropleth maps, the size of
+                spatial units becomes irrelevant, allowing for both absolute (e.g., count values) and standardized data
+                without the need for specific map projections. Proportional symbol maps are therefore helpful to use
+                when the size of geographic units may distort the displayed data (e.g., when large census tracts
+                dominate the display in a choropleth map) or when the size of spatial units are highly variable.
+                Challenges, however, tend to lie with limiting map congestion due to overlapping symbols, legend design,
+                and difficulty interpreting exact values based on symbol size.
+            </p>
+        </div>
+
+        <div id="text">
+            <h2>Dot density maps</h2>
+
+            <p>
+                <a href="https://en.wikipedia.org/wiki/Dot_distribution_map" target="_blank">Dot density maps</a> are
+                particularly effective for showing the spatial distribution of clusters and
+                differences in densities or counts across large scales.
+            </p>
+
+            <p>
+                <img src="img/dot-density-map.png" alt="Dot density map">
+            </p>
+            <p class="caption">
+                <i>Example dot density map of commute mode in Toronto (<a href="https://jonathancritchley.ca/todot.html"
+                        target="_blank">Critchley, 2012</a>)</i>
+            </p>
+
+            <p>
+                They use equal-sized dots to represent a fixed quantitative value within a polygon. For example, if our
+                dot has been set to represent 1000 people, for a census tract with a population of 3000, we would map
+                three points.
+            </p>
+
+            <p>
+                Again, the area of the spatial unit holds importance, and an equal area projection is recommended so as
+                not to distort the perceived density of the dots, however, we are not limited to the use of standardised
+                data – so this map type can be pretty versatile!
+            </p>
+
+            <p>
+                One key issue with dot maps is that the dots are positioned randomly and some viewers may interpret
+                points as actual locations of the variable being mapped. It’s also possible that dots may be plotted in
+                locations where certain phenomenon cannot actually occur, such as waterways and parks. However, with
+                ancillary information, it’s possible to develop <a href="https://en.wikipedia.org/wiki/Dasymetric_map"
+                    target="_blank">dasymetric</a> maps where the positioning of dots is limited to particular regions
+                within polygon boundaries.
+            </p>
+        </div>
+
+        <div id="text">
+            <h2>Multivariate maps</h2>
+
+            <p>
+                So far, we’ve been thinking about visualizing a single variable (in a univariate map) but it’s likely
+                that you’re interested in mapping more than one variable. Coming back to our initial example about food
+                insecurity, perhaps you plan to map the spatial distribution of food support schemes and household
+                income… This is where multivariate maps come into play! They allow us to explore and visualize the
+                relationships* between two or more variables simultaneously, either within a single map or a series of
+                related maps.
+            </p>
+
+            <p class="note">
+                *Descriptive relationships only… not statistical or causal!
+            </p>
+
+            <p>
+                Below I've highlighted a few approaches you may use for multivariate mapping:
+            </p>
+
+            <h3>1. Small multiples</h3>
+            <p>
+                Small multiples involve creating a series of separate but related maps, each depicting a different
+                variable. These maps are arranged in a grid or sequence, allowing viewers to compare and contrast
+                spatial patterns across multiple dimensions.
+            </p>
+
+            <h3>2. Thematic map combinations</h3>
+            <p>
+                You may like to try combining multiple map types within a single layout. For example, it’s possible to
+                overlay a choropleth map with a proportional symbols or dot density map to represent different variables
+                simultaneously.
+            </p>
+
+            <h3>3. Categorical dot maps</h3>
+            <p>
+                The notion of dot mapping can be quite easily extended to create categorical dot maps where distinct
+                colours are used for each variable to be mapped.
+            </p>
+
+            <h3>4. Bivariate choropleth maps</h3>
+            <p>If you have two variables represented by the same geographic units, you may try creating a bivariate
+                choropleth map whereby the symbology from both maps is blended into a single colour scheme. If each
+                variables have been categorised into three classes, a total of nine new classes are created with four
+                key groups (high-high, high-low, low-high, and low-low) are most easily identified through strongest use
+                of colour and shading.</p>
+
+                <p>
+                    <img src="img/bivariate-choro.webp" alt="Bivariate choropleth map">
+                </p>
+
+                <p class="caption">
+                    <i>Bivariate map of Pap test use and cervical cancer screening availability in South Carolina (<a href="https://www.cdc.gov/pcd/issues/2020/19_0254.htm"
+                            target="_blank">Biesecker et al., 2020</a>)</i>
+                </p>
+
+        </div>
+
+
+        <div id="text">
+            <h2>Data classification</h2>
+            <p>
+                With any map you create, it’s important to decide where your data should be classified and how. Leaving
+                your data unclassified (in a continuous format) may help highlight gradual trends across your data,
+                however, often there is a trade-off between high numerical accuracy and visual interpretation. Imagine a
+                continuous colour ramp in your legend, for example, and trying to identify the corresponding colour and
+                value on a choropleth map… It becomes quite tricky!
+            </p>
+
+            <p>
+                Classifying our data into groups can make it more interpretable. For numeric data, our aim is to group
+                together similar observations and split apart observations that are substantially different. Depending
+                on your data, there are different classification methods that allow you to do that. The first step is to explore your data points using a histogram and select an appropriate classification method based on the distribution of your data. When choosing the number of classes, natural clusters and dividing points can help you and as a general rule, a range of 3-7 classes tends to be considered reasonable for legibility.
+            </p>
+
+            <p>
+                <img src="img/data-classification.png"
+                    alt="Histograms of different data distributions and a table tabulating when to use different classification methods">
+            </p>
+
+            <p>
+                For tips on how to classify data using python, check out the Geographic Data Science textbook's <a href="https://geographicdata.science/book/notebooks/05_choropleth.html#quantitative-data-classification" target="_blank">chapter</a> on the topic.
+
+            </p>
+
+
+            
+        </div>
+
+        <div id="conclusions">
+            <h2>Conclusions</h2>
+            <p>
+                These are just a few examples of different map types you may create, and ways to prepare and visualize
+                your data. While it’s important to remember key guidelines in relation to colour and data
+                standardisation, be creative with highlighting key findings within your spatial data! The key aim is to
+                communicate your spatial data insights as clearly as possible – seeking and incorporating feedback from
+                potential map viewers is a great way to refine your visualizations and create compelling maps.
+            </p>
+        </div>
+
+
+
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+
+
+
+<!-- 
+
+- examples
+    - references
+    - https://schoolofcities.github.io/mapping-workshops-2023/qgis-intro
+ -->
