@@ -63,3 +63,16 @@ img {
     max-width: 800px;
     line-height: 30px;
 }
+
+/* code {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f4f4f4;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+pre {
+    background-color: #f4f4f4;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto; /* Enable horizontal scrolling if needed 
+} */
